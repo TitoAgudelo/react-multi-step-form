@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   nextStep: 1,
-  payload: {}
+  payload: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -22,8 +22,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         nextStep: 2,
         payload: Object.assign({}, state.payload,{
-          a: a
-        })
+          a: a,
+        }),
       };
 
     case STEP_TWO:
@@ -32,8 +32,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         nextStep: 3,
         payload: Object.assign({}, state.payload,{
-          b: b
-        })
+          b: b,
+        }),
       };
 
     case STEP_THREE:
@@ -41,8 +41,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         nextStep: 4,
         payload: Object.assign({}, state.payload,{
-          text: action.payload.value
-        })
+          text: action.payload.value,
+        }),
       };
 
     case STEP_FOUR:
@@ -50,46 +50,46 @@ export default function reducer(state = initialState, action) {
         ...state,
         nextStep: 5,
         payload: Object.assign({}, state.payload,{
-          c: action.payload.value
-        })
+          c: action.payload.value,
+        }),
       };
 
     case SUBMIT_FORM_DATA:
       return {
         ...state,
-        formSubmissionStatus: PENDING
+        formSubmissionStatus: PENDING,
       };
 
     case SUBMIT_FORM_DATA_SUCCESS:
       return {
         ...state,
-        formSubmissionStatus: SUCCESS
+        formSubmissionStatus: SUCCESS,
       };
 
     case SUBMIT_FORM_DATA_ERROR:
       return {
         ...state,
         formSubmissionStatus: FAILED,
-        formSubmissionError: action.payload.error
+        formSubmissionError: action.payload.error,
       };
 
     case CHECK_TEXT:
       return {
         ...state,
-        checkTextStatus: PENDING
+        checkTextStatus: PENDING,
       };
 
     case CHECK_TEXT_SUCCESS:
       return {
         ...state,
-        checkTextStatus: SUCCESS
+        checkTextStatus: SUCCESS,
       };
 
     case CHECK_TEXT_FAILURE:
       return {
         ...state,
         checkTextStatus: FAILED,
-        checkTextError: action.payload.error
+        checkTextError: action.payload.error,
       };
 
     default:

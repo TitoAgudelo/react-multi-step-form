@@ -9,26 +9,26 @@ import { checkIt, submitIt } from './../api';
 export function stepOne(formInfo) {
   return {
     type: STEP_ONE,
-    payload: formInfo
+    payload: formInfo,
   };
 }
 
 export function stepTwo(formInfo) {
   return {
     type: STEP_TWO,
-    payload: formInfo
+    payload: formInfo,
   };
 }
 
 function submitData() {
   return {
-    type: SUBMIT_FORM_DATA
+    type: SUBMIT_FORM_DATA,
   };
 }
 
 function submitDataSuccess() {
   return {
-    type: SUBMIT_FORM_DATA_SUCCESS
+    type: SUBMIT_FORM_DATA_SUCCESS,
   };
 }
 
@@ -36,20 +36,20 @@ function submitDataFailure(error) {
   return {
     type: SUBMIT_FORM_DATA_ERROR,
     payload: {
-      error
-    }
+      error,
+    },
   };
 }
 
 function checkText() {
   return {
-    type: CHECK_TEXT
+    type: CHECK_TEXT,
   };
 }
 
 function checkTextSuccess() {
   return {
-    type: CHECK_TEXT_SUCCESS
+    type: CHECK_TEXT_SUCCESS,
   };
 }
 
@@ -57,8 +57,8 @@ function checkTextFailure(error) {
   return {
     type: CHECK_TEXT_FAILURE,
     payload: {
-      error
-    }
+      error,
+    },
   };
 }
 
@@ -70,7 +70,7 @@ export function stepThree(formInfo) {
       dispatch(checkTextSuccess());
       dispatch({
         type: STEP_THREE,
-        payload: formInfo
+        payload: formInfo,
       });
     }, (error) => {
       dispatch(checkTextFailure(error.message));
@@ -82,7 +82,7 @@ export function stepThree(formInfo) {
 export function stepFour(formInfo) {
   return {
     type: STEP_FOUR,
-    payload: formInfo
+    payload: formInfo,
   };
 }
 
@@ -91,8 +91,7 @@ export function stepFive() {
     const state = getState();
     let formPayload = state.form.payload;
     dispatch(submitData());
-    submitIt(formPayload).
-      then(() => {
+    submitIt(formPayload).then(() => {
         dispatch(submitDataSuccess());
       }, (error) => {
         dispatch(submitDataFailure(error.message));

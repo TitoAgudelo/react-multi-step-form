@@ -1,52 +1,52 @@
-import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import * as FormActions from './../actions'
-import Form from './../components/Form'
+import * as FormActions from './../actions';
+import Form from './../components/Form';
 
 class FormContainer extends React.Component {
   static propTypes = {
     form: PropTypes.object,
-    actions: PropTypes.object
+    actions: PropTypes.object,
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      form: props.form
-    }
+      form: props.form,
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    let { form } = nextProps
+    let { form } = nextProps;
     this.setState({
-      form: form
-    })
+      form: form,
+    });
   }
 
   render() {
-    let { form } = this.state
-    let { actions } = this.props
+    let { form } = this.state;
+    let { actions } = this.props;
     return (
       <Form form={form} actions={actions} />
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  form: state.form
+  form: state.form,
 })
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(
     FormActions,
-    dispatch
+    dispatch,
   )
 })
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(FormContainer)
 

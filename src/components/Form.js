@@ -1,18 +1,16 @@
-import React from 'react'
-import classnames from 'classnames'
+import React from 'react';
+import classnames from 'classnames';
 import { PropTypes } from 'prop-types';
+import { PENDING, FAILED } from './../constants/';
+import './../styles/form.css';
 
-import {
-  PENDING, FAILED
-} from './../constants/'
-
-const options = ['C1', 'C2', 'C3']
+const options = ['C1', 'C2', 'C3'];
 
 export default class StepForm extends React.Component {
 
   static propTypes = {
     form: PropTypes.object,
-    actions: PropTypes.object
+    actions: PropTypes.object,
   };
 
   constructor(props) {
@@ -24,7 +22,7 @@ export default class StepForm extends React.Component {
       B1: false,
       B2: false,
       step3Text: '',
-      selectedOption: options[0]
+      selectedOption: options[0],
     };
   }
 
@@ -47,21 +45,18 @@ export default class StepForm extends React.Component {
     );
   }
 
-  /*
-    Step 1
-   */
-
+  /* Step one */
   onCheckBoxesClicked(event) {
     let checkBoxId = event.target.id;
     let isA1Checked = checkBoxId === 'A1' ? !this.state.A1 : this.state.A1;
     let isA2Checked = checkBoxId === 'A2' ? !this.state.A2 : this.state.A2;
     this.setState({
       A1: isA1Checked,
-      A2: isA2Checked
+      A2: isA2Checked,
     });
     this.props.actions.stepOne({
       A1: isA1Checked,
-      A2: isA2Checked
+      A2: isA2Checked,
     });
   }
 
@@ -78,33 +73,30 @@ export default class StepForm extends React.Component {
     );
   }
 
-  /*
-    Step 2
-   */
-
+  /* Step two */
   onStepTwoButtonsClicked(event) {
     let buttonId = event.target.id;
     let b2Selected = buttonId === 'B2' ? true : false;
     let b1Selected = buttonId === 'B1' ? true : false;
     this.setState({
       B2: b2Selected,
-      B1: b1Selected
+      B1: b1Selected,
     });
     this.props.actions.stepTwo({
       B2: b2Selected,
-      B1: b1Selected
+      B1: b1Selected,
     });
   }
 
   renderStepTwo() {
     let b1ClassNames = classnames({
       'button-step-two': true,
-      'active':  this.state.B1 === true
+      'active':  this.state.B1 === true,
     });
 
     let b2ClassNames = classnames({
       'button-step-two': true,
-      'active': this.state.B2 === true
+      'active': this.state.B2 === true,
     });
 
     return (
@@ -120,24 +112,21 @@ export default class StepForm extends React.Component {
     );
   }
 
-  /*
-    Step 3
-   */
-
+  /* Step three */
   handleStep3Change(event) {
     this.setState({step3Text: event.target.value});
   }
 
   checkStepThree() {
     this.props.actions.stepThree({
-      value: this.state.step3Text
+      value: this.state.step3Text,
     });
   }
 
   renderStepThree() {
     let checkButtonClasses = classnames({
       'button-step-two': true,
-      'active':  this.state.checkTextStatus !== PENDING
+      'active':  this.state.checkTextStatus !== PENDING,
     });
     return (
       <div className="step3">
@@ -151,15 +140,12 @@ export default class StepForm extends React.Component {
     );
   }
 
-  /*
-    Step 4
-   */
-
+  /* Step four */
   onSelectChange(event) {
     let option = event.target.value;
     this.setState({selectedOption: option});
     this.props.actions.stepFour({
-      value: option
+      value: option,
     });
   }
 
@@ -188,10 +174,7 @@ export default class StepForm extends React.Component {
     );
   }
 
-  /*
-    Final step
-   */
-
+  /* Last step */
   renderSubmit() {
     let disabled = this.state.formSubmissionStatus === PENDING;
     let showErorr = this.state.formSubmissionStatus === FAILED;
@@ -213,29 +196,41 @@ export default class StepForm extends React.Component {
     this.props.actions.stepFive();
   }
 
-  /*
-    Render the steps
-   */
-  render() {
-    let stepOneJSX = this.state.currentStep  >= 1 ? this.renderStepOne() : '';
-    let stepTwoJSX = this.state.currentStep  >= 2 ? this.renderStepTwo() : '';
-    let stepThreeJSX = this.state.currentStep  >= 3 ? this.renderStepThree() : '';
-    let stepFourJSX = this.state.currentStep  >= 4 ? this.renderStepFour() : '';
-    let formButtonJSX = this.state.currentStep >= 5 ? this.renderSubmit() : '';
+  /* Stepline */
+  renderStepline() {
+    let currentStep = this.state.currentStep;
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <div>
-          {stepOneJSX}
-          <br/>
-          {stepTwoJSX}
-          <br/>
-          {stepThreeJSX}
-          <br/>
-          {stepFourJSX}
-          <br/>
-          {formButtonJSX}
-        </div>
-      </form>
+      <div className="stepline">
+        <div className={"line " + (currentStep >= 1 ? 'active' : '')}>step one</div>
+        <div className={"line " + (currentStep >= 2 ? 'active' : '')}>step two</div>
+        <div className={"line " + (currentStep >= 3 ? 'active' : '')}>step three</div>
+        <div className={"line " + (currentStep >= 4 ? 'active' : '')}>step four</div>
+      </div>
+    );
+  }
+
+  /* Render the steps */
+  render() {
+    let stepOne = this.state.currentStep  === 1 ? this.renderStepOne() : '';
+    let stepTwo = this.state.currentStep  === 2 ? this.renderStepTwo() : '';
+    let stepThree = this.state.currentStep  === 3 ? this.renderStepThree() : '';
+    let stepFour = this.state.currentStep  === 4 ? this.renderStepFour() : '';
+    let formButton = this.state.currentStep === 5 ? this.renderSubmit() : '';
+    let stepLine = this.renderStepline();
+    return (
+      <div className="container">
+        <h1 className="title">Multistep React & Redux</h1>
+        { stepLine }
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <div>
+            { stepOne }
+            { stepTwo }
+            { stepThree }
+            { stepFour }
+            { formButton }
+          </div>
+        </form>
+      </div>
     );
   }
 }

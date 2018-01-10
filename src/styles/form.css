@@ -8,6 +8,7 @@ body {
 }
 
 .title {
+  color: #16434B;
   text-align: center;
 }
 
@@ -59,4 +60,67 @@ body {
 
 .line.active:before {
   border-color: #66949C;
+}
+
+.form-container {
+  max-width: 415px;
+  margin: 4rem auto;
+}
+
+.step-title {
+  color: #E94858;
+  margin: 0;
+}
+
+.step-legend {
+  color: #918F9E;
+  font-size: 12px;
+}
+
+label {
+  color: #3CB4CB;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+input {
+  cursor: pointer;
+}
+
+input[type=text] {
+  cursor: auto;
+  height: 25px;
+  padding: 0 5px;
+}
+
+.step-content {
+  display: flex;
+}
+
+.button-step-three {
+  background-color: #918F9E;
+  color: white;
+  cursor: pointer;
+  height: 100%;
+  font-size: 12px;
+  margin-left: 1rem;
+  padding: 5px;
+}
+
+.button-step-three.active {
+  background-color: #82BF6E;
+}
+
+.step-submit {
+  background: none;
+  background-color: #82BF6E;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
 }

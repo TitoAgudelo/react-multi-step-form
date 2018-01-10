@@ -63,9 +63,10 @@ export default class StepForm extends React.Component {
   renderStepOne() {
     return (
       <div className="step1">
-        <h3>Step one</h3>
+        <h3 className="step-title">Step one</h3>
+        <p className="step-legend">Next step is available after at least one of them is checked</p>
         <input type="checkbox" id="A1" value={this.state.A1} onChange={this.onCheckBoxesClicked.bind(this)} />
-        <label> A1</label>
+        <label>A1</label>
         <br/>
         <input type="checkbox" id="A2" value={this.state.A2} onChange={this.onCheckBoxesClicked.bind(this)} />
         <label>A2</label>
@@ -101,13 +102,14 @@ export default class StepForm extends React.Component {
 
     return (
       <div className="step2">
-        <h3>Step two</h3>
-        <div className={b1ClassNames} id="B1" onClick={this.onStepTwoButtonsClicked.bind(this)}>
-          B1
-        </div>
-        <div className={b2ClassNames} id="B2" onClick={this.onStepTwoButtonsClicked.bind(this)}>
-          B2
-        </div>
+        <h3 className="step-title">Step two</h3>
+        <p className="step-legend">Next step is available after at least one of them is checked</p>
+        <label className={b1ClassNames}>
+          <input type="radio" name="options" id="B1" onClick={this.onStepTwoButtonsClicked.bind(this)} /> B1
+        </label>
+        <label className={b2ClassNames}>
+          <input type="radio" name="options" id="B2" onClick={this.onStepTwoButtonsClicked.bind(this)} /> B2
+        </label>
       </div>
     );
   }
@@ -125,15 +127,18 @@ export default class StepForm extends React.Component {
 
   renderStepThree() {
     let checkButtonClasses = classnames({
-      'button-step-two': true,
+      'button-step-three': true,
       'active':  this.state.checkTextStatus !== PENDING,
     });
     return (
       <div className="step3">
-        <h3>Step three</h3>
-        <input type="text" value={this.state.step3Text} onChange={this.handleStep3Change.bind(this)} />
-        <div className={checkButtonClasses} onClick={this.checkStepThree.bind(this)}>
-          Check
+        <h3 className="step-title">Step three</h3>
+        <p className="step-legend">Next step is available if a response from API is fine. <br/> Value should start with `@`.</p>
+        <div className="step-content">
+          <input placeholder="Insert value" type="text" value={this.state.step3Text} onChange={this.handleStep3Change.bind(this)} />
+          <span className={checkButtonClasses} onClick={this.checkStepThree.bind(this)}>
+            Check
+          </span>
         </div>
         {this.state.checkTextStatus === FAILED ? this.renderErrorText(this.state.checkTextError) : ''}
       </div>
@@ -164,7 +169,8 @@ export default class StepForm extends React.Component {
   renderStepFour() {
     return (
       <div className="step4">
-        <h3>Step four</h3>
+        <h3 className="step-title">Step four</h3>
+        <p className="step-legend">Next step is available when any option has been chosen.</p>
         <select onChange={this.onSelectChange.bind(this)}>
           {
             this.renderOptions(options)
@@ -186,7 +192,7 @@ export default class StepForm extends React.Component {
     return (
       <div>
         {showErorr ? this.renderErrorText(this.state.formSubmissionError) : ''}
-        <input type="submit" value="Submit" />
+        <input className="step-submit" type="submit" value="Submit" />
       </div>
     );
   }
@@ -205,6 +211,7 @@ export default class StepForm extends React.Component {
         <div className={"line " + (currentStep >= 2 ? 'active' : '')}>step two</div>
         <div className={"line " + (currentStep >= 3 ? 'active' : '')}>step three</div>
         <div className={"line " + (currentStep >= 4 ? 'active' : '')}>step four</div>
+        <div className={"line " + (currentStep >= 5 ? 'active' : '')}>submit</div>
       </div>
     );
   }
@@ -221,7 +228,7 @@ export default class StepForm extends React.Component {
       <div className="container">
         <h1 className="title">Multistep React & Redux</h1>
         { stepLine }
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form className="form-container" onSubmit={this.handleSubmit.bind(this)}>
           <div>
             { stepOne }
             { stepTwo }
